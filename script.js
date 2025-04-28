@@ -7,10 +7,25 @@ particlesJS('particles-js', {
     number: { value: 80, density: { enable: true, value_area: 800 } },
     color: { value: "#ff3333" },
     shape: { type: "circle" },
-    opacity: { value: 0.5, random: false },
+    opacity: { value: 0.5, random: true },
     size: { value: 3, random: true },
-    line_linked: { enable: true, distance: 150, color: "#ff3333", opacity: 0.4, width: 1 },
-    move: { enable: true, speed: 6, direction: "none", random: false, straight: false, out_mode: "out", bounce: false }
+    line_linked: {
+      enable: true,
+      distance: 150,
+      color: "#ff3333",
+      opacity: 0.4,
+      width: 1
+    },
+    move: {
+      enable: true,
+      speed: 3,
+      direction: "none",
+      random: true,
+      straight: false,
+      out_mode: "out",
+      bounce: false,
+      attract: { enable: true, rotateX: 600, rotateY: 1200 }
+    }
   },
   interactivity: {
     detect_on: "canvas",
@@ -97,30 +112,73 @@ const initAnimations = () => {
     duration: 0.3,
     scrollTrigger: {
       trigger: "body",
-      start: "top -80",
+      start: "top top",
+      end: "top -50",
       toggleActions: "play none none reverse"
     }
   });
 
-  // Reveal animations
-  gsap.utils.toArray('.reveal-text, .reveal-card, .reveal-image').forEach((el, i) => {
-    revealElement(el, i * 0.1);
+  // Reveal animations with enhanced effects
+  document.querySelectorAll('.reveal-text').forEach(element => {
+    gsap.from(element, {
+      y: 50,
+      opacity: 0,
+      duration: 1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: element,
+        start: "top bottom-=100",
+        toggleActions: "play none none reverse"
+      }
+    });
   });
 
-  // Timeline animation
+  // Enhanced project card animations
+  gsap.utils.toArray('.project-card').forEach(card => {
+    gsap.from(card, {
+      y: 100,
+      opacity: 0,
+      rotation: 5,
+      duration: 1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: card,
+        start: "top bottom-=100",
+        toggleActions: "play none none reverse"
+      }
+    });
+  });
+
+  // Skill category reveal with stagger
+  gsap.from('.skill-category', {
+    y: 50,
+    opacity: 0,
+    duration: 1,
+    stagger: 0.2,
+    ease: "power3.out",
+    scrollTrigger: {
+      trigger: '.skills-grid',
+      start: "top bottom-=100",
+      toggleActions: "play none none reverse"
+    }
+  });
+
+  // Enhanced timeline animations
   gsap.timeline({
     scrollTrigger: {
       trigger: ".timeline",
       start: "top bottom-=100",
+      end: "bottom center",
       toggleActions: "play none none reverse"
     }
   })
   .from(".timeline-item", {
+    x: -100,
     opacity: 0,
-    y: 50,
     stagger: 0.3,
     duration: 1,
-    ease: "power3.out"
+    ease: "power3.out",
+    rotation: -5
   });
 
   // Parallax effect for particles
@@ -135,64 +193,60 @@ const initAnimations = () => {
     }
   });
 
-    // skill categories reveal animations
-    gsap.utils.toArray('.skill-category').forEach((category, i) => {
-        gsap.from(category, {
-            y: 50,
-            opacity: 0,
-            duration: 0.8,
-            delay: i * 0.2,
-            ease: "power3.out",
-            scrollTrigger: {
-                trigger: category,
-                start: "top bottom-=50",
-                toggleActions: "play none none reverse"
-            }
-        });
+  // Simplified skill animations that won't interfere with display
+  gsap.utils.toArray('.skill-category').forEach(category => {
+    gsap.from(category, {
+      y: 30,
+      opacity: 0,
+      duration: 0.8,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: category,
+        start: "top bottom-=50",
+        toggleActions: "play none none reverse"
+      }
     });
+  });
 
-    // Skill items reveal animation
-    gsap.utils.toArray('.skill-item').forEach((el, i) => {
-        gsap.from(el, {
-            y: 20,
-            opacity: 0,
-            duration: 0.5,
-            delay: 0.5 + (i * 0.1),
-            ease: "power3.out",
-            scrollTrigger: {
-                trigger: el,
-                start: "top bottom-=50",
-                toggleActions: "play none none reverse"
-            }
-        });
+  // Simpler skill item animations
+  gsap.utils.toArray('.skill-item').forEach(item => {
+    gsap.from(item, {
+      y: 20,
+      opacity: 0,
+      duration: 0.5,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: item,
+        start: "top bottom-=50",
+        toggleActions: "play none none reverse"
+      }
     });
+  });
 
-    gsap.from('.about-text', {
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-            trigger: '.about-content',
-            start: "top bottom-=100",
-            toggleActions: "play none none reverse"
-        }
-    });
+  gsap.from('.about-text', {
+    opacity: 0,
+    y: 50,
+    duration: 1,
+    ease: "power3.out",
+    scrollTrigger: {
+      trigger: '.about-content',
+      start: "top bottom-=100",
+      toggleActions: "play none none reverse"
+    }
+  });
 
-    gsap.from('.profile-photo-container', {
-        opacity: 0,
-        x: 100,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-            trigger: '.about-content',
-            start: "top bottom-=100",
-            toggleActions: "play none none reverse"
-        }
-    });
-
+  gsap.from('.profile-photo-container', {
+    opacity: 0,
+    x: 100,
+    duration: 1,
+    ease: "power3.out",
+    scrollTrigger: {
+      trigger: '.about-content',
+      start: "top bottom-=100",
+      toggleActions: "play none none reverse"
+    }
+  });
 }
-
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
